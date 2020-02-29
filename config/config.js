@@ -77,12 +77,12 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
-      path: '/user',
+			path: '/user',
       component: '../layouts/UserLayout',
       routes: [
         {
           name: 'login',
-          path: '/user/login',
+					path: '/user/login',
           component: './user/login',
         },
       ],
@@ -94,7 +94,6 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
           routes: [
             {
               path: '/',
@@ -111,7 +110,6 @@ export default {
               name: 'admin',
               icon: 'crown',
               component: './Admin',
-              authority: ['admin'],
               routes: [
                 {
                   path: '/admin/sub-page',
@@ -185,6 +183,6 @@ export default {
   manifest: {
     basePath: '/',
   },
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+	proxy: proxy[REACT_APP_ENV || 'dev'],
   chainWebpack: webpackPlugin,
 };

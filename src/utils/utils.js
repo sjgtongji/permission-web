@@ -39,6 +39,8 @@ export const getAuthorityFromRouter = (router = [], pathname) => {
 };
 export const getRouteAuthority = (path, routeData) => {
   let authorities;
+	console.log(path)
+	console.log(routeData)
   routeData.forEach(route => {
     // match prefix
     if (pathRegexp(`${route.path}/(.*)`).test(`${path}/`)) {
@@ -55,5 +57,6 @@ export const getRouteAuthority = (path, routeData) => {
       }
     }
   });
+	console.log(authorities)
   return authorities;
 };

@@ -69,7 +69,6 @@ const routes = [
                 .default,
             })
           : require('../../layouts/BasicLayout').default,
-        authority: ['admin', 'user'],
         routes: [
           {
             path: '/',
@@ -102,7 +101,6 @@ const routes = [
                     .default,
                 })
               : require('../Admin').default,
-            authority: ['admin'],
             routes: [
               {
                 path: '/admin/sub-page',

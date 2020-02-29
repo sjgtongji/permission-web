@@ -120,7 +120,7 @@ const BasicLayout = props => {
       });
     }
   }; // get children authority
-
+	console.log(props.route.routes)
   const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
     authority: undefined,
   };
