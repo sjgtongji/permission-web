@@ -16,7 +16,7 @@ const Model = {
         payload: response,
       }); // Login successfully
 			console.log(response)
-      if (response.code === 200) {
+      if (response && response.code === 200) {
         // const urlParams = new URL(window.location.href);
         // const params = getPageQuery();
         // let { redirect } = params;
@@ -37,7 +37,9 @@ const Model = {
         // }
 
         router.replace('/');
-      }
+      }else{
+
+			}
     },
 
     logout() {

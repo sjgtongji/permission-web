@@ -1,27 +1,31 @@
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, Dropdown, Menu, message } from 'antd';
+import { Button, Divider, Dropdown, Menu, message, Modal } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryRule, updateRule, addRule, removeRule } from './service';
+const { confirm } = Modal;
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 /**
  * 添加节点
  * @param fields
  */
 
 const handleAdd = async fields => {
-  const hide = message.loading('正在添加');
+  const hide = message.loading('正在新建');
 
   try {
+		console.log(fields)
     await addRule({ ...fields });
     hide();
-    message.success('添加成功');
+    message.success('新建成功');
     return true;
   } catch (error) {
+		console.log(error)
     hide();
-    message.error('添加失败请重试！');
+    message.error('新建失败请重试！');
     return false;
   }
 };
@@ -71,6 +75,28 @@ const handleRemove = async selectedRows => {
   }
 };
 
+const handleValid = (project,actionRef) => {
+	console.log(project)
+	confirm({
+	    title: project.valid ? '确认要禁用此项目?': '确认要启用此项目?',
+	    icon: <ExclamationCircleOutlined />,
+	    content: '',
+	    onOk() {
+				const hide = message.loading('正在修改');
+				project.valid = !project.valid;
+				updateRule(project).then(response => {
+					console.log(response)
+					hide();
+					message.success('修改成功');
+					if (actionRef.current) {
+						actionRef.current.reload();
+					}
+				})
+	    },
+	    onCancel() {},
+	  });
+};
+
 const TableList = () => {
   const [sorter, setSorter] = useState('');
   const [createModalVisible, handleModalVisible] = useState(false);
@@ -79,83 +105,100 @@ const TableList = () => {
   const actionRef = useRef();
   const columns = [
     {
-      title: '规则名称',
+      title: '项目名称',
       dataIndex: 'name',
       rules: [
         {
           required: true,
-          message: '规则名称为必填项',
+          message: '项目名称为必填项',
         },
       ],
     },
-    {
-      title: '描述',
-      dataIndex: 'desc',
-      valueType: 'textarea',
+		{
+      title: '公司名称',
+      dataIndex: 'companyName',
+      rules: [
+        {
+          required: true,
+          message: '公司名称为必填项',
+        },
+      ],
     },
+		{
+			title: '联系电话',
+			dataIndex: 'phone',
+			rules: [
+				{
+					required: true,
+					message: '联系电话为必填项',
+				},
+			],
+		},
+		{
+			title: '邮箱地址',
+			dataIndex: 'email',
+			rules: [
+				{
+					required: true,
+					message: '邮箱地址为必填项',
+				},
+			],
+		},
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: val => `${val} 万`,
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Default',
-        },
-        1: {
-          text: '运行中',
-          status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
-          status: 'Error',
-        },
-      },
-    },
-    {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
+      title: '项目创建时间',
+      dataIndex: 'createTime',
       sorter: true,
       valueType: 'dateTime',
       hideInForm: true,
+			hideInSearch: true
+    },
+		{
+      title: '状态',
+      dataIndex: 'valid',
+      hideInForm: true,
+      valueEnum: {
+        false : {
+          text: '已禁用',
+          status: 'Error',
+        },
+        true : {
+          text: '启用中',
+          status: 'Success',
+        }
+      }
     },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => (
-        <>
+      render: (_, record) => {
+				return (<>
           <a
             onClick={() => {
               handleUpdateModalVisible(true);
               setStepFormValues(record);
             }}
           >
-            配置
+            修改
           </a>
-          <Divider type="vertical" />
-          <a href="">订阅警报</a>
+					<Divider type="vertical" />
+					<a
+						onClick={() => {
+							handleValid(record,actionRef);
+						}}
+					>
+						{record.valid ? "禁用" : "启用"}
+					</a>
         </>
-      ),
+      )},
     },
   ];
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="查询表格"
+        headerTitle="项目列表"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         onChange={(_, _filter, _sorter) => {
           const sorterResult = _sorter;
 
@@ -210,7 +253,7 @@ const TableList = () => {
           </div>
         )}
         request={params => {
-					let result = queryRule(params); console.log(result) ; return result
+					let result = queryRule(params); return result
 				}}
         columns={columns}
         rowSelection={{}}
@@ -228,7 +271,7 @@ const TableList = () => {
               }
             }
           }}
-          rowKey="key"
+          rowKey="name"
           type="form"
           columns={columns}
           rowSelection={{}}

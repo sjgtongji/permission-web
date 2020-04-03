@@ -142,6 +142,20 @@ const routes = [
             exact: true,
           },
           {
+            name: 'projects.projects',
+            icon: 'table',
+            path: '/projects',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__projectList" */ '../projectList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../projectList').default,
+            exact: true,
+          },
+          {
             component: __IS_BROWSER
               ? _dvaDynamic({
                   component: () =>

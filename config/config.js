@@ -126,6 +126,12 @@ export default {
               path: '/list',
               component: './ListTableList',
             },
+						{
+							name: 'projects.projects',
+							icon: 'table',
+							path: '/projects',
+							component: './projectList',
+						},
             {
               component: './404',
             },
