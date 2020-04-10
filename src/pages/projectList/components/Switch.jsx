@@ -12,7 +12,7 @@ const MySwitch = props => {
 		onValueChange && onValueChange(data)
 	}
 	return (
-		<Switch defaultChecked={data.valid} onChange={onValidChange} checkedChildren={<CheckOutlined />}
+		<Switch checked={data.valid} onChange={onValidChange} checkedChildren={<CheckOutlined />}
 				unCheckedChildren={<CloseOutlined />}/>
 	)
 }

@@ -273,10 +273,15 @@ const TableList = () => {
                   onClick={async e => {
                     if (e.key === "batchUnvalid") {
                       await handleBatchUnvalid(selectedRows);
-                      action.reload();
+											if(actionRef.current){
+												actionRef.current.reload();
+											}
+
                     } else if (e.key === "batchValid") {
                       await handleBatchValid(selectedRows);
-                      action.reload();
+											if(actionRef.current){
+												actionRef.current.reload();
+											}
                     }
                   }}
                   selectedKeys={[]}
@@ -300,13 +305,9 @@ const TableList = () => {
                 fontWeight: 600
               }}
             >
-              {selectedRowKeys.length}
+              {selectedRows.length}
             </a>{" "}
             项&nbsp;&nbsp;
-            <span>
-              服务调用次数总计{" "}
-              {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-            </span>
           </div>
         )}
         request={params => {
