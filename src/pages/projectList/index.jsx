@@ -1,10 +1,12 @@
-import { DownOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Divider, Dropdown, Menu, message, Modal } from "antd";
+import { DownOutlined, PlusOutlined ,CloseOutlined, CheckOutlined } from "@ant-design/icons";
+import { Button, Divider, Dropdown, Menu, message, Modal} from "antd";
 import React, { useState, useRef } from "react";
 import { PageHeaderWrapper } from "@ant-design/pro-layout";
 import ProTable from "@ant-design/pro-table";
 import CreateForm from "./components/CreateForm";
 import UpdateForm from "./components/UpdateForm";
+import EditForm from "./components/EditForm";
+import Switch from './components/Switch'
 import {
   queryRule,
   updateRule,
@@ -122,12 +124,40 @@ const handleValid = (project, actionRef) => {
   });
 };
 
+
+
 const TableList = () => {
   const [sorter, setSorter] = useState("");
   const [createModalVisible, handleModalVisible] = useState(false);
-  const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const [stepFormValues, setStepFormValues] = useState({});
+	const [editModalvisible, handleEditModalVisible] = useState(false);
+  const [editCurrent, setEditCurrent] = useState(undefined);
+	const [done, setDone] = useState(false);
   const actionRef = useRef();
+	const handleDone = () => {
+		setDone(false);
+		handleEditModalVisible(false);
+	};
+
+	const handleCancel = () => {
+		handleEditModalVisible(false);
+	};
+
+	const handleSubmit = values => {
+		console.log(values)
+		setDone(true);
+		// dispatch({
+		// 	type: 'listBasicList/submit',
+		// 	payload: {
+		// 		id,
+		// 		...values,
+		// 	},
+		// });
+	};
+	const onValidChanged = record => {
+		console.log(record)
+		console.log(actionRef)
+		handleValid(record, actionRef);
+	}
   const columns = [
     {
       title: "项目名称",
@@ -177,21 +207,17 @@ const TableList = () => {
       hideInForm: true,
       hideInSearch: true
     },
-    {
-      title: "状态",
+		{
+			title: "状态",
       dataIndex: "valid",
       hideInForm: true,
-      valueEnum: {
-        false: {
-          text: "已禁用",
-          status: "Error"
-        },
-        true: {
-          text: "启用中",
-          status: "Success"
-        }
+			hideInSearch: true,
+			render: (_, record) => {
+        return (
+					<Switch data={record} onValueChange={onValidChanged} />
+        );
       }
-    },
+		},
     {
       title: "操作",
       dataIndex: "option",
@@ -201,8 +227,8 @@ const TableList = () => {
           <>
             <a
               onClick={() => {
-                handleUpdateModalVisible(true);
-                setStepFormValues(record);
+                handleEditModalVisible(true);
+								setEditCurrent(record);
               }}
             >
               修改
@@ -312,28 +338,14 @@ const TableList = () => {
           rowSelection={{}}
         />
       </CreateForm>
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async value => {
-            const success = await handleUpdate(value);
-
-            if (success) {
-              handleModalVisible(false);
-              setStepFormValues({});
-
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
+			<EditForm
+        done={done}
+        current={editCurrent}
+        visible={editModalvisible}
+        onDone={handleDone}
+        onCancel={handleCancel}
+        onSubmit={handleSubmit}
+      	/>
     </PageHeaderWrapper>
   );
 };
