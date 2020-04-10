@@ -77,12 +77,12 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
-			path: '/user',
+      path: '/user',
       component: '../layouts/UserLayout',
       routes: [
         {
           name: 'login',
-					path: '/user/login',
+          path: '/user/login',
           component: './user/login',
         },
       ],
@@ -115,8 +115,7 @@ export default {
                   path: '/admin/sub-page',
                   name: 'sub-page',
                   icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
+                  component: './Welcome'
                 },
               ],
             },
@@ -126,11 +125,23 @@ export default {
               path: '/list',
               component: './ListTableList',
             },
+            {
+              name: 'projects.projects',
+              icon: 'table',
+              path: '/projects',
+              component: './projectList',
+            },
+            {
+              name: '空白页面',
+              icon: 'smile',
+              path: '/emptypage',
+              component: './EmptyPage',
+            },
 						{
-							name: 'projects.projects',
+							name: 'list.basic-list',
 							icon: 'table',
-							path: '/projects',
-							component: './projectList',
+							path: '/listbasiclist',
+							component: './ListBasicList',
 						},
             {
               component: './404',
@@ -189,6 +200,6 @@ export default {
   manifest: {
     basePath: '/',
   },
-	proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: proxy[REACT_APP_ENV || 'dev'],
   chainWebpack: webpackPlugin,
 };

@@ -114,7 +114,6 @@ const routes = [
                         .default,
                     })
                   : require('../Welcome').default,
-                authority: ['admin'],
                 exact: true,
               },
               {
@@ -153,6 +152,42 @@ const routes = [
                     .default,
                 })
               : require('../projectList').default,
+            exact: true,
+          },
+          {
+            name: '空白页面',
+            icon: 'smile',
+            path: '/emptypage',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__EmptyPage" */ '../EmptyPage'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../EmptyPage').default,
+            exact: true,
+          },
+          {
+            name: 'list.basic-list',
+            icon: 'table',
+            path: '/listbasiclist',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__ListBasicList__model.js' */ '/Users/jigangsun/permission-web-git/src/pages/ListBasicList/model.js').then(
+                      m => {
+                        return { namespace: 'model', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "p__ListBasicList" */ '../ListBasicList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../ListBasicList').default,
             exact: true,
           },
           {
