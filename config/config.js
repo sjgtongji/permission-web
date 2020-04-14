@@ -131,6 +131,12 @@ export default {
               path: '/projects',
               component: './projectList',
             },
+						{
+              name: '菜单管理',
+              icon: 'smile',
+              path: '/menus',
+              component: './menuList',
+            },
             {
               name: '空白页面',
               icon: 'smile',

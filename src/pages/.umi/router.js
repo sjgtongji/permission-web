@@ -155,6 +155,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '菜单管理',
+            icon: 'smile',
+            path: '/menus',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__menuList" */ '../menuList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../menuList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',
