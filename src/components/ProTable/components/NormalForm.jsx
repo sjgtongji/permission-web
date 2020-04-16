@@ -13,7 +13,7 @@ const formLayout = {
   },
 };
 
-const EditForm = props => {
+const NormalForm = props => {
   const [form] = Form.useForm();
   const { done, visible, current, onDone, onCancel, onSubmit , columns} = props;
   useEffect(() => {
@@ -36,7 +36,7 @@ const EditForm = props => {
 
   const handleFinish = values => {
     if (onSubmit) {
-      onSubmit(values);
+      onSubmit(values, current == null);
     }
   };
 
@@ -50,7 +50,26 @@ const EditForm = props => {
         onOk: handleSubmit,
         onCancel,
       };
-
+	const getFormItems = (columns, current) => {
+		let items = [];
+		columns.forEach(row => {
+			if(!row.hideInForm){
+				if(!row.valueType){
+					console.log(current ? current[row.dataIndex] : 'undefined')
+					items.push(
+						<Form.Item
+		          name={row.dataIndex}
+		          label={row.title}
+		          rules={row.rules}
+		        >
+		          <Input placeholder={row.placeholder} defaultValue={current ? current[row.dataIndex] : ''}/>
+		        </Form.Item>
+					)
+				}
+			}
+		})
+		return items;
+	}
   const getModalContent = () => {
     if (done) {
       return (
@@ -60,7 +79,7 @@ const EditForm = props => {
           subTitle=""
           extra={
             <Button type="primary" onClick={onDone}>
-              知道了
+              关闭
             </Button>
           }
           className={styles.formResult}
@@ -70,60 +89,14 @@ const EditForm = props => {
 
     return (
       <Form {...formLayout} form={form} onFinish={handleFinish}>
-        <Form.Item
-          name="name"
-          label="项目名称"
-          rules={[
-            {
-              required: true,
-              message: '请输入项目名称',
-            },
-          ]}
-        >
-          <Input placeholder="请输入项目名称" />
-        </Form.Item>
-				<Form.Item
-          name="companyName"
-          label="公司名称"
-          rules={[
-            {
-              required: true,
-              message: '请输入公司名称',
-            },
-          ]}
-        >
-          <Input placeholder="请输入公司名称" />
-        </Form.Item>
-				<Form.Item
-          name="phone"
-          label="联系电话"
-          rules={[
-            {
-              required: true,
-              message: '请输入联系电话',
-            },
-          ]}
-        >
-          <Input placeholder="请输入联系电话" />
-        </Form.Item>
-				<Form.Item
-					name="email"
-					label="邮箱地址"
-					rules={[
-						{
-							required: true,
-							message: '请输入邮箱地址',
-						},
-					]}>
-					<Input placeholder="请输入邮箱地址" />
-				</Form.Item>
+        {getFormItems(columns, current)}
       </Form>
     );
   };
 
   return (
     <Modal
-      title={done ? null : `任务${current ? '编辑' : '添加'}`}
+      title={done ? null : `${current ? '修改' : '新增'}`}
       className={styles.standardListForm}
       width={640}
       bodyStyle={
@@ -144,4 +117,4 @@ const EditForm = props => {
   );
 };
 
-export default EditForm;
+export default NormalForm;

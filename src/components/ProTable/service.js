@@ -1,5 +1,4 @@
 import request from "@/utils/requestUtil";
-import sysRequest from "@/utils/request";
 import {
   LOGIN,
   GET_PROJECTS,
@@ -8,7 +7,7 @@ import {
   BATCH_VALID_PROJECT,
   BATCH_UNVALID_PROJECT
 } from "@/utils/constant";
-export async function queryRule(params) {
+export async function query(params) {
   // console.log(params)
   // return new Promise((resolve , reject) => {
   // 	request(GET_PROJECTS,{
@@ -38,15 +37,15 @@ export async function batchValid(params) {
     data: { ids: params }
   });
 }
-export async function addRule(params) {
+export async function add(params) {
   return request(CREATE_PROJECT, {
     method: "POST",
     data: { ...params, method: "post" }
   });
 }
-export async function updateRule(params) {
+export async function update(params) {
   console.log(params);
-  return sysRequest(MODIFY_PROJECT, {
+  return request(MODIFY_PROJECT, {
     method: "POST",
     data: params
   });

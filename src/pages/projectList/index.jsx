@@ -2,18 +2,20 @@ import { DownOutlined, PlusOutlined ,CloseOutlined, CheckOutlined } from "@ant-d
 import { Button, Divider, Dropdown, Menu, message, Modal} from "antd";
 import React, { useState, useRef } from "react";
 import { PageHeaderWrapper } from "@ant-design/pro-layout";
-import ProTable from "@ant-design/pro-table";
+import ProTable from '../../components/ProTable/index.jsx'
+import NormalForm from '../../components/ProTable/components/NormalForm.jsx'
 import CreateForm from "./components/CreateForm";
 import UpdateForm from "./components/UpdateForm";
 import EditForm from "./components/EditForm";
 import Switch from './components/Switch'
+import request from "@/utils/requestUtil";
 import {
-  queryRule,
-  updateRule,
-  addRule,
-  batchValid,
-  batchUnvalid
-} from "./service";
+  GET_PROJECTS,
+  CREATE_PROJECT,
+  MODIFY_PROJECT,
+  BATCH_VALID_PROJECT,
+  BATCH_UNVALID_PROJECT
+} from "@/utils/constant";
 const { confirm } = Modal;
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 /**
@@ -21,144 +23,15 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
  * @param fields
  */
 
-const handleAdd = async fields => {
-  const hide = message.loading("正在新建");
-
-  try {
-    console.log(fields);
-    await addRule({ ...fields });
-    hide();
-    message.success("新建成功");
-    return true;
-  } catch (error) {
-    console.log(error);
-    hide();
-    message.error("新建失败请重试！");
-    return false;
-  }
-};
-/**
- * 更新节点
- * @param fields
- */
-
-const handleUpdate = async fields => {
-  const hide = message.loading("正在配置");
-
-  try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key
-    });
-    hide();
-    message.success("配置成功");
-    return true;
-  } catch (error) {
-    hide();
-    message.error("配置失败请重试！");
-    return false;
-  }
-};
-/**
- *  批量启用
- * @param selectedRows
- */
-
-const handleBatchValid = async selectedRows => {
-  const hide = message.loading("正在启用");
-  if (!selectedRows) return true;
-
-  try {
-    await batchValid(selectedRows.map(row => row.id));
-    hide();
-    message.success("启用成功，即将刷新");
-    return true;
-  } catch (error) {
-    console.log(error);
-    hide();
-    message.error("启用失败，请重试");
-    return false;
-  }
-};
-/**
- *  批量禁用
- * @param selectedRows
- */
-const handleBatchUnvalid = async selectedRows => {
-  const hide = message.loading("正在禁用");
-  if (!selectedRows) return true;
-
-  try {
-    await batchUnvalid(selectedRows.map(row => row.id));
-    hide();
-    message.success("禁用成功，即将刷新");
-    return true;
-  } catch (error) {
-    console.log(error);
-    hide();
-    message.error("禁用失败，请重试");
-    return false;
-  }
-};
-
-const handleValid = (project, actionRef) => {
-  console.log(project);
-  confirm({
-    title: project.valid ? "确认要禁用此项目?" : "确认要启用此项目?",
-    icon: <ExclamationCircleOutlined />,
-    content: "",
-    onOk() {
-      const hide = message.loading("正在修改");
-      project.valid = !project.valid;
-      updateRule(project).then(response => {
-        console.log(response);
-        hide();
-        message.success("修改成功");
-        if (actionRef.current) {
-          actionRef.current.reload();
-        }
-      });
-    },
-    onCancel() {}
-  });
-};
 
 
 
 const TableList = () => {
-  const [sorter, setSorter] = useState("");
-  const [createModalVisible, handleModalVisible] = useState(false);
-	const [editModalvisible, handleEditModalVisible] = useState(false);
-  const [editCurrent, setEditCurrent] = useState(undefined);
+	const [modalVisible, handleModalVisible] = useState(false);
+  const [current, setCurrent] = useState(undefined);
 	const [done, setDone] = useState(false);
-  const actionRef = useRef();
-	const handleDone = () => {
-		setDone(false);
-		handleEditModalVisible(false);
-	};
-
-	const handleCancel = () => {
-		handleEditModalVisible(false);
-	};
-
-	const handleSubmit = values => {
-		console.log(values)
-		setDone(true);
-		// dispatch({
-		// 	type: 'listBasicList/submit',
-		// 	payload: {
-		// 		id,
-		// 		...values,
-		// 	},
-		// });
-	};
-	const onValidChanged = record => {
-		console.log(record)
-		console.log(actionRef)
-		handleValid(record, actionRef);
-	}
-  const columns = [
+	const actionRef = useRef();
+  const dataColumns = [
     {
       title: "项目名称",
       dataIndex: "name",
@@ -206,148 +79,201 @@ const TableList = () => {
       valueType: "dateTime",
       hideInForm: true,
       hideInSearch: true
-    },
-		{
-			title: "状态",
-      dataIndex: "valid",
-      hideInForm: true,
-			hideInSearch: true,
-			render: (_, record) => {
-        return (
-					<Switch data={record} onValueChange={onValidChanged} />
-        );
-      }
-		},
-    {
-      title: "操作",
-      dataIndex: "option",
-      valueType: "option",
-      render: (_, record) => {
-        return (
-          <>
-            <a
-              onClick={() => {
-                handleEditModalVisible(true);
-								setEditCurrent(record);
-              }}
-            >
-              修改
-            </a>
-            <Divider type="vertical" />
-            <a
-              onClick={() => {
-                handleValid(record, actionRef);
-              }}
-            >
-              {record.valid ? "禁用" : "启用"}
-            </a>
-          </>
-        );
-      }
     }
   ];
+	const handleAdd = async fields => {
+	  const hide = message.loading("正在新建");
+	  try {
+	    console.log(fields);
+	    await request(CREATE_PROJECT, {
+		    method: "POST",
+		    data: { ...fields, method: "post" }
+		  });
+	    hide();
+	    message.success("新建成功");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("新建失败请重试！");
+	    return false;
+	  }
+	};
+	const handleUpdate = async fields => {
+		const hide = message.loading("正在新建");
+	  try {
+	    console.log(fields);
+	    await request(MODIFY_PROJECT, {
+		    method: "POST",
+		    data: { ...fields, method: "post" }
+		  });
+	    hide();
+	    message.success("新建成功");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("新建失败请重试！");
+	    return false;
+	  }
+	}
+	const handleBatchValid = async selectedRows => {
+		if (!selectedRows) return true;
+	  const hide = message.loading("正在启用");
+	  try {
+	    await request(BATCH_VALID_PROJECT, {
+		    method: "POST",
+		    data: { ids: selectedRows.map(row => row.id)}
+		  });
+	    hide();
+	    message.success("启用成功，即将刷新");
+			actionRef && actionRef.current && actionRef.current.reload()
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("启用失败，请重试");
+	    return false;
+	  }
+	};
+	/**
+	 *  批量禁用
+	 * @param selectedRows
+	 */
+	const handleBatchUnvalid = async selectedRows => {
+	  const hide = message.loading("正在禁用");
+	  if (!selectedRows) return true;
+
+	  try {
+	    await request(BATCH_UNVALID_PROJECT, {
+		    method: "POST",
+		    data: { ids: selectedRows.map(row => row.id)}
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("禁用成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("禁用失败，请重试");
+	    return false;
+	  }
+	};
+
+	const handleValid = async project => {
+		const hide = message.loading(`正在上传数据`);
+		project.valid = !project.valid;
+		try {
+	    await request(MODIFY_PROJECT, {
+		    method: "POST",
+		    data: project
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("操作成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("操作失败，请重试");
+	    return false;
+	  }
+	};
+	const onAdd = () => {
+		console.log("onAdd")
+		setCurrent(undefined)
+		handleModalVisible(true)
+	}
+
+	const onModify = (data) => {
+		console.log("onModify")
+		setCurrent(data);
+		handleModalVisible(true)
+	}
+	const onBatchValid = async (rows) => {
+		if (!rows) return true;
+		try {
+			handleBatchValid(rows)
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	const onBatchUnvalid = (rows) => {
+		console.log("onBatchUnvalid")
+		console.log(rows)
+		if (!rows) return true;
+		try {
+			handleBatchUnvalid(rows)
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	const onBatchDelete = (rows) => {
+		console.log("onBatchDelete")
+		console.log(rows)
+	}
+	const onDelete = (data) => {
+		console.log("onDelete")
+		console.log(data)
+	}
+	const onValidChange = (data) => {
+		console.log("onValidChange")
+		console.log(data)
+		try {
+			handleValid(data)
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	const handleDone = () => {
+		setDone(false);
+		handleModalVisible(false);
+	};
+
+	const handleCancel = () => {
+		setDone(false);
+		handleModalVisible(false);
+	};
+
+	const handleSubmit = async (values, isAdd) => {
+		console.log(values)
+		console.log(isAdd)
+		setDone(true);
+		try {
+			if(isAdd){
+				await handleAdd(values)
+			}else{
+				await handleUpdate(values)
+			}
+			setDone(true)
+			actionRef && actionRef.current && actionRef.current.reload()
+		} catch (e) {
+		}
+	};
   return (
-    <PageHeaderWrapper>
-      <ProTable
-        headerTitle="项目列表"
-        actionRef={actionRef}
-        rowKey="id"
-        onChange={(_, _filter, _sorter) => {
-          const sorterResult = _sorter;
-
-          if (sorterResult.field) {
-            setSorter(`${sorterResult.field}_${sorterResult.order}`);
-          }
-        }}
-        params={{
-          sorter
-        }}
-        toolBarRender={(action, { selectedRows }) => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
-          </Button>,
-          selectedRows && selectedRows.length > 0 && (
-            <Dropdown
-              overlay={
-                <Menu
-                  onClick={async e => {
-                    if (e.key === "batchUnvalid") {
-                      await handleBatchUnvalid(selectedRows);
-											if(actionRef.current){
-												actionRef.current.reload();
-											}
-
-                    } else if (e.key === "batchValid") {
-                      await handleBatchValid(selectedRows);
-											if(actionRef.current){
-												actionRef.current.reload();
-											}
-                    }
-                  }}
-                  selectedKeys={[]}
-                >
-                  <Menu.Item key="batchUnvalid">批量禁用</Menu.Item>
-                  <Menu.Item key="batchValid">批量启用</Menu.Item>
-                </Menu>
-              }
-            >
-              <Button>
-                批量操作 <DownOutlined />
-              </Button>
-            </Dropdown>
-          )
-        ]}
-        tableAlertRender={(selectedRowKeys, selectedRows) => (
-          <div>
-            已选择{" "}
-            <a
-              style={{
-                fontWeight: 600
-              }}
-            >
-              {selectedRows.length}
-            </a>{" "}
-            项&nbsp;&nbsp;
-          </div>
-        )}
-        request={params => {
-          let result = queryRule(params);
-          return result;
-        }}
-        columns={columns}
-        rowSelection={{}}
-      />
-      <CreateForm
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
-      >
-        <ProTable
-          onSubmit={async value => {
-            const success = await handleAdd(value);
-
-            if (success) {
-              handleModalVisible(false);
-
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          rowKey="name"
-          type="form"
-          columns={columns}
-          rowSelection={{}}
-        />
-      </CreateForm>
-			<EditForm
-        done={done}
-        current={editCurrent}
-        visible={editModalvisible}
-        onDone={handleDone}
-        onCancel={handleCancel}
-        onSubmit={handleSubmit}
-      	/>
-    </PageHeaderWrapper>
+    <ProTable
+			dataColumns={dataColumns}
+			actionRef={actionRef}
+			headerTitle={'项目列表'}
+			queryUrl={GET_PROJECTS}
+			onAdd={onAdd}
+			onModify={onModify}
+			onBatchValid={onBatchValid}
+			onBatchUnvalid={onBatchUnvalid}
+			onDelete={onDelete}
+			onBatchDelete={onBatchDelete}
+			onValidChange={onValidChange}>
+			<NormalForm
+				done={done}
+				columns={dataColumns}
+				current={current}
+				visible={modalVisible}
+				onDone={handleDone}
+				onCancel={handleCancel}
+				onSubmit={handleSubmit}
+				/>
+		</ProTable>
   );
 };
 
