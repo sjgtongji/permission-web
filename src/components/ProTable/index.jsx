@@ -59,7 +59,8 @@ const TableList = props => {
 		onBatchDelete,
 		onValidChange,
 		children,
-		actionRef
+		actionRef,
+		rowSelection
 	} = props
 	// const handleAdd = async fields => {
 	//   const hide = message.loading("正在新建");
@@ -281,7 +282,7 @@ const TableList = props => {
           return result;
         }}
         columns={allColumns}
-        rowSelection={{}}
+        rowSelection={rowSelection ? {} : undefined}
       />
       {/* <CreateForm
         onCancel={() => handleModalVisible(false)}

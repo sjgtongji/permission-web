@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import { Modal, Result, Button, Form, DatePicker, Input, Select } from 'antd';
 import styles from './style.less';
-
+import ProjectSelector from '../../../components/SelectProject/index.jsx'
 const { TextArea } = Input;
 const formLayout = {
   labelCol: {
@@ -13,21 +13,19 @@ const formLayout = {
   },
 };
 
-const NormalForm = props => {
+const EditForm = props => {
   const [form] = Form.useForm();
-  const { done, visible, current, onDone, onCancel, onSubmit , columns} = props;
+  const { done, visible, current, parent, onDone, onCancel, onSubmit , columns} = props;
   useEffect(() => {
     if (form && !visible) {
       form.resetFields();
     }
   }, [props.visible]);
   useEffect(() => {
-    if (current) {
-      form.setFieldsValue({
-        ...current
-      });
-    }
-  }, [props.current]);
+		let fieldsValue = parent ? {...current, parentId : parent.id} : {...current}
+		console.log(fieldsValue)
+		form.setFieldsValue(fieldsValue);
+  }, [props.current, props.parent]);
 
   const handleSubmit = () => {
     if (!form) return;
@@ -39,7 +37,11 @@ const NormalForm = props => {
       onSubmit(values, current == null);
     }
   };
-
+	const onProjectSelected = value => {
+		form.setFieldsValue({
+			projectId : value
+		});
+	}
   const modalFooter = done
     ? {
         footer: null,
@@ -55,7 +57,6 @@ const NormalForm = props => {
 		columns.forEach(row => {
 			if(!row.hideInForm){
 				if(!row.valueType){
-					console.log(current ? current[row.dataIndex] : 'undefined')
 					items.push(
 						<Form.Item
 		          name={row.dataIndex}
@@ -83,6 +84,33 @@ const NormalForm = props => {
 				)
 			}
 		})
+		items.push(
+			<div style={{ display: 'none'}}>
+				<Form.Item
+					name='parentId'
+					label='选择父菜单'
+					rules={[
+					{
+						required: false,
+						message: '选择父菜单'
+					}
+				]}>
+				</Form.Item>
+			</div>
+		)
+		items.push(
+			<Form.Item
+				name='projectId'
+				label='选择项目'
+				rules={[
+				{
+					required: true,
+					message: '请选择项目'
+				}
+			]}>
+				<ProjectSelector onProjectSelected={onProjectSelected} defaultValue={current ? current.projectId : ""}></ProjectSelector>
+			</Form.Item>
+		)
 		return items;
 	}
   const getModalContent = () => {
@@ -132,4 +160,4 @@ const NormalForm = props => {
   );
 };
 
-export default NormalForm;
+export default EditForm;

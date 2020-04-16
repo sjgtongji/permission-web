@@ -5,12 +5,11 @@ const MySwitch = props => {
 	const [loading, setLoading] = useState(false);
 	const {
 		data,
-		onValueChange,
-		actionRef
+		onValueChange
 	} = props;
 	const onValidChange = checked => {
 		setLoading(true)
-		onValueChange && onValueChange(data, actionRef)
+		onValueChange && onValueChange(data)
 	}
 	return (
 		<Switch checked={data.valid} onChange={onValidChange} checkedChildren={<CheckOutlined />}

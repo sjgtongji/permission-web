@@ -12,7 +12,7 @@ class ProjectSelector extends React.Component {
 			projectList : [],
 			displayList: []
 		}
-		this.onChange.bind(this)
+		this.onChange = this.onChange.bind(this)
 		this.onFocus = this.onFocus.bind(this)
 		this.onBlur = this.onBlur.bind(this)
 		this.onSearch = this.onSearch.bind(this)
@@ -52,7 +52,6 @@ class ProjectSelector extends React.Component {
 		return (
 			<Select
 				showSearch
-				style={{ width: 300 }}
 				placeholder="选择项目"
 				optionFilterProp="children"
 				onChange={this.onChange}

@@ -14,14 +14,12 @@ import {
   CREATE_PROJECT,
   MODIFY_PROJECT,
   BATCH_VALID_PROJECT,
-  BATCH_UNVALID_PROJECT
+  BATCH_UNVALID_PROJECT,
+	DELETE_PROJECT,
+	BATCH_DELETE_PROJECT
 } from "@/utils/constant";
 const { confirm } = Modal;
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-/**
- * 添加节点
- * @param fields
- */
 
 
 
@@ -32,6 +30,19 @@ const TableList = () => {
 	const [done, setDone] = useState(false);
 	const actionRef = useRef();
   const dataColumns = [
+		{
+      title: "id",
+      dataIndex: "id",
+      rules: [
+        {
+          required: false,
+          message: "项目名称为必填项"
+        }
+      ],
+			hideInForm: true,
+      hideInSearch: true,
+			hideInTable: true
+    },
     {
       title: "项目名称",
       dataIndex: "name",
@@ -209,13 +220,45 @@ const TableList = () => {
 			console.log(error);
 		}
 	}
-	const onBatchDelete = (rows) => {
+	const onBatchDelete = async (rows) => {
 		console.log("onBatchDelete")
 		console.log(rows)
+		const hide = message.loading(`正在删除`);
+		try {
+	    await request(BATCH_DELETE_PROJECT, {
+		    method: "POST",
+		    data: { ids: rows.map(row => row.id)}
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("删除成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("删除失败，请重试");
+	    return false;
+	  }
 	}
-	const onDelete = (data) => {
+	const onDelete = async (data) => {
 		console.log("onDelete")
 		console.log(data)
+		const hide = message.loading(`正在删除`);
+		try {
+	    await request(DELETE_PROJECT, {
+		    method: "POST",
+		    data: data
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("删除成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("删除失败，请重试");
+	    return false;
+	  }
 	}
 	const onValidChange = (data) => {
 		console.log("onValidChange")
@@ -263,7 +306,8 @@ const TableList = () => {
 			onBatchUnvalid={onBatchUnvalid}
 			onDelete={onDelete}
 			onBatchDelete={onBatchDelete}
-			onValidChange={onValidChange}>
+			onValidChange={onValidChange}
+			rowSelection={true}>
 			<NormalForm
 				done={done}
 				columns={dataColumns}
