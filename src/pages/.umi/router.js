@@ -169,6 +169,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '角色管理',
+            icon: 'smile',
+            path: '/roles',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__roleList" */ '../roleList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../roleList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

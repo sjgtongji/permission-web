@@ -1,7 +1,8 @@
 import {
 	GET_MENUS,
 	CREATE_MENUS,
-	MODIFY_MENUS
+	MODIFY_MENUS,
+	DELETE_MENUS
 } from "@/utils/constant";
 import ProTable from '../../components/ProTable/index.jsx'
 import ProjectSelector from '../../components/SelectProject/index.jsx'
@@ -9,6 +10,8 @@ import EditForm from './components/EditForm.jsx'
 import { Button, Divider, Dropdown, Menu, message, Modal} from "antd";
 import React, { useState, useRef } from "react";
 import request from "@/utils/requestUtil";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+const { confirm } = Modal;
 const MenuList = () => {
 	const [modalVisible, handleModalVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
@@ -108,6 +111,14 @@ const MenuList = () => {
 						>
 							新建子菜单
 						</a>
+						<Divider type="vertical" />
+						<a
+							onClick={() => {
+								onDelete(record)
+							}}
+						>
+							删除
+						</a>
 					</>
 				);
 			}
@@ -194,23 +205,23 @@ const MenuList = () => {
 	};
 
 	const handleValid = async project => {
-		// const hide = message.loading(`正在上传数据`);
-		// project.valid = !project.valid;
-		// try {
-	  //   await request(MODIFY_PROJECT, {
-		//     method: "POST",
-		//     data: project
-		//   });
-	  //   hide();
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   message.success("操作成功，即将刷新");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("操作失败，请重试");
-	  //   return false;
-	  // }
+		const hide = message.loading(`正在上传数据`);
+		project.valid = !project.valid;
+		try {
+	    await request(MODIFY_MENUS, {
+		    method: "POST",
+		    data: project
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("操作成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("操作失败，请重试");
+	    return false;
+	  }
 	};
 	const onAdd = () => {
 		console.log("onAdd")
@@ -251,6 +262,26 @@ const MenuList = () => {
 	const onDelete = (data) => {
 		console.log("onDelete")
 		console.log(data)
+		confirm({
+			title: "确认要删除此项目?",
+			icon: <ExclamationCircleOutlined />,
+			content: "",
+			onOk() {
+				const hide = message.loading("正在删除");
+				request(DELETE_MENUS, {
+					method: "POST",
+					data: data
+				}).then(response => {
+					console.log(response);
+					hide();
+					message.success("删除成功");
+					if (actionRef.current) {
+						actionRef.current.reload();
+					}
+				})
+			},
+			onCancel() {}
+		});
 	}
 	const onValidChange = (data) => {
 		console.log("onValidChange")

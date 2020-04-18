@@ -4,10 +4,7 @@ import React, { useState, useRef } from "react";
 import { PageHeaderWrapper } from "@ant-design/pro-layout";
 import ProTable from '../../components/ProTable/index.jsx'
 import NormalForm from '../../components/ProTable/components/NormalForm.jsx'
-import CreateForm from "./components/CreateForm";
-import UpdateForm from "./components/UpdateForm";
 import EditForm from "./components/EditForm";
-import Switch from './components/Switch'
 import request from "@/utils/requestUtil";
 import {
   GET_PROJECTS,

@@ -137,6 +137,12 @@ export default {
               path: '/menus',
               component: './menuList',
             },
+						{
+							name: '角色管理',
+							icon: 'smile',
+							path: '/roles',
+							component: './roleList',
+						},
             {
               name: '空白页面',
               icon: 'smile',
