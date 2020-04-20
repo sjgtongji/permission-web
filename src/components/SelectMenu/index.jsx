@@ -23,7 +23,8 @@ class MenuSelector extends React.Component {
 		this.onSelect = this.onSelect.bind(this)
 	}
   componentDidMount() {
-    request(GET_MENUS_FOR_SELECT, {}).then(res => {
+		console.log("MenuSelector:" , this.props.projectId , this.props.roleId)
+    request(GET_MENUS_FOR_SELECT, {params : {projectId : this.props.projectId, roleId : this.props.roleId}}).then(res => {
 			console.log(res)
 			// this.setState({
 			// 	projectList : res.data,

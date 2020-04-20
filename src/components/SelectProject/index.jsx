@@ -61,7 +61,8 @@ class ProjectSelector extends React.Component {
 				filterOption={(input, option) =>{
 					return option.children.match(input)
 				}}
-				defaultValue={defaultValue}>
+				defaultValue={defaultValue}
+				disabled={this.props.disabled != null ? this.props.disabled : false}>
 				{children}
 			</Select>
 		)

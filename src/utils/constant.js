@@ -17,3 +17,9 @@ export const MODIFY_MENUS = REQUEST_URL + "/menu/modify";
 export const DELETE_MENUS = REQUEST_URL + "/menu/delete";
 
 export const GET_ROLES = REQUEST_URL + "/role/query";
+export const CREATE_ROLE = REQUEST_URL + "/role/create";
+export const MODIFY_ROLE = REQUEST_URL + "/role/modify";
+export const DELETE_ROLE = REQUEST_URL + "/role/delete";
+export const BATCH_VALID_ROLE = REQUEST_URL + "/role/batchValid";
+export const BATCH_UNVALID_ROLE = REQUEST_URL + "/role/batchUnvalid";
+export const BATCH_DELETE_ROLE = REQUEST_URL + "/role/batchDelete";

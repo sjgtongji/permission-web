@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import moment from 'moment';
 import { Modal, Result, Button, Form, DatePicker, Input, Select } from 'antd';
 import styles from './style.less';
 import ProjectSelector from '../../../components/SelectProject/index.jsx'
+import MenuSelector from '../../../components/SelectMenu/index.jsx';
 const { TextArea } = Input;
 const formLayout = {
   labelCol: {
@@ -15,17 +16,22 @@ const formLayout = {
 
 const EditForm = props => {
   const [form] = Form.useForm();
-  const { done, visible, current, parent, onDone, onCancel, onSubmit , columns} = props;
+  const { done, visible, current, onDone, onCancel, onSubmit , columns} = props;
+	const [menuVisible, setMenuVisible] = useState(false);
+	const [projectId , setProjectId] = useState("");
   useEffect(() => {
     if (form && !visible) {
       form.resetFields();
     }
   }, [props.visible]);
   useEffect(() => {
-		let fieldsValue = parent ? {...current, parentId : parent.id} : {...current}
+		let fieldsValue = current != null ? {...current, menuIds : current.menus.map(val => val.id)} : {...current};
 		console.log(fieldsValue)
 		form.setFieldsValue(fieldsValue);
-  }, [props.current, props.parent]);
+		if(current != null){
+			setProjectId(current.projectId)
+		}
+  }, [props.current]);
 
   const handleSubmit = () => {
     if (!form) return;
@@ -38,8 +44,16 @@ const EditForm = props => {
     }
   };
 	const onProjectSelected = value => {
-		form.setFieldsValue({
+ 		form.setFieldsValue({
 			projectId : value
+ 		});
+		setProjectId(value)
+		setMenuVisible(true)
+ 	}
+
+	const onMenuSelected = value => {
+		form.setFieldsValue({
+			menuIds : value
 		});
 	}
   const modalFooter = done
@@ -85,20 +99,6 @@ const EditForm = props => {
 			}
 		})
 		items.push(
-			<div style={{ display: 'none'}}>
-				<Form.Item
-					name='parentId'
-					label='选择父菜单'
-					rules={[
-					{
-						required: false,
-						message: '选择父菜单'
-					}
-				]}>
-				</Form.Item>
-			</div>
-		)
-		items.push(
 			<Form.Item
 				name='projectId'
 				label='选择项目'
@@ -108,9 +108,28 @@ const EditForm = props => {
 					message: '请选择项目'
 				}
 			]}>
-				<ProjectSelector onProjectSelected={onProjectSelected} defaultValue={current ? current.projectId : ""}></ProjectSelector>
+				<ProjectSelector onProjectSelected={onProjectSelected} defaultValue={current ? current.projectId : ""} disabled={current ? true : false}></ProjectSelector>
+
 			</Form.Item>
 		)
+		if(menuVisible || current != null){
+			items.push(
+				<Form.Item
+					name='menuIds'
+					label='选择菜单'
+					rules={[
+					{
+						required: true,
+						message: '请选择菜单'
+					}
+				]}>
+					<MenuSelector onMenuSelect={onMenuSelected}
+						projectId={projectId}
+						roleId={current ? current.id : 0}></MenuSelector>
+				</Form.Item>
+			)
+		}
+
 		return items;
 	}
   const getModalContent = () => {
