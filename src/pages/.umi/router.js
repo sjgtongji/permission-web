@@ -183,6 +183,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '用户管理',
+            icon: 'smile',
+            path: '/users',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__usersList" */ '../usersList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../usersList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

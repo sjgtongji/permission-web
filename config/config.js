@@ -143,6 +143,12 @@ export default {
 							path: '/roles',
 							component: './roleList',
 						},
+						{
+							name: '用户管理',
+							icon: 'smile',
+							path: '/users',
+							component: './usersList',
+						},
             {
               name: '空白页面',
               icon: 'smile',

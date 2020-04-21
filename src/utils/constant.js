@@ -23,3 +23,6 @@ export const DELETE_ROLE = REQUEST_URL + "/role/delete";
 export const BATCH_VALID_ROLE = REQUEST_URL + "/role/batchValid";
 export const BATCH_UNVALID_ROLE = REQUEST_URL + "/role/batchUnvalid";
 export const BATCH_DELETE_ROLE = REQUEST_URL + "/role/batchDelete";
+export const GET_ROLES_FOR_SELECT = REQUEST_URL + "/role/queryForSelect";
+
+export const GET_USERS = REQUEST_URL + "/user/query";
