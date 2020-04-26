@@ -26,3 +26,9 @@ export const BATCH_DELETE_ROLE = REQUEST_URL + "/role/batchDelete";
 export const GET_ROLES_FOR_SELECT = REQUEST_URL + "/role/queryForSelect";
 
 export const GET_USERS = REQUEST_URL + "/user/query";
+export const CREATE_USER = REQUEST_URL + "/user/create";
+export const MODIFY_USER = REQUEST_URL + "/user/modify";
+export const DELETE_USER = REQUEST_URL + "/user/delete";
+export const BATCH_VALID_USER = REQUEST_URL + "/user/batchValid";
+export const BATCH_UNVALID_USER = REQUEST_URL + "/user/batchUnvalid";
+export const BATCH_DELETE_USER = REQUEST_URL + "/user/batchDelete";

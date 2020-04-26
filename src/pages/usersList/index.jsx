@@ -6,7 +6,13 @@ import ProTable from '../../components/ProTable/index.jsx'
 import EditForm from "./components/EditForm.jsx";
 import request from "@/utils/requestUtil";
 import {
-  GET_USERS
+  GET_USERS,
+	CREATE_USER,
+	MODIFY_USER,
+	DELETE_USER,
+	BATCH_VALID_USER,
+	BATCH_UNVALID_USER,
+	BATCH_DELETE_USER
 } from "@/utils/constant";
 const { confirm } = Modal;
 import { ExclamationCircleOutlined } from "@ant-design/icons";
@@ -84,103 +90,103 @@ const TableList = () => {
     }
   ];
 	const handleAdd = async fields => {
-	  // const hide = message.loading("正在新建");
-	  // try {
-	  //   console.log(fields);
-	  //   await request(CREATE_ROLE, {
-		//     method: "POST",
-		//     data: { ...fields, method: "post" }
-		//   });
-	  //   hide();
-	  //   message.success("新建成功");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("新建失败请重试！");
-	  //   return false;
-	  // }
+	  const hide = message.loading("正在新建");
+	  try {
+	    console.log(fields);
+	    await request(CREATE_USER, {
+		    method: "POST",
+		    data: { ...fields, method: "post" }
+		  });
+	    hide();
+	    message.success("新建成功");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("新建失败请重试！");
+	    return false;
+	  }
 	};
 	const handleUpdate = async fields => {
-		// const hide = message.loading("正在修改");
-	  // try {
-	  //   console.log(fields);
-	  //   await request(MODIFY_ROLE, {
-		//     method: "POST",
-		//     data: { ...fields, method: "post" }
-		//   });
-	  //   hide();
-	  //   message.success("修改成功");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("修改失败请重试！");
-	  //   return false;
-	  // }
+		const hide = message.loading("正在修改");
+	  try {
+	    console.log(fields);
+	    await request(MODIFY_USER, {
+		    method: "POST",
+		    data: { ...fields, method: "post" }
+		  });
+	    hide();
+	    message.success("修改成功");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("修改失败请重试！");
+	    return false;
+	  }
 	}
 	const handleBatchValid = async selectedRows => {
-		// if (!selectedRows) return true;
-	  // const hide = message.loading("正在启用");
-	  // try {
-	  //   await request(BATCH_VALID_ROLE, {
-		//     method: "POST",
-		//     data: { ids: selectedRows.map(row => row.id)}
-		//   });
-	  //   hide();
-	  //   message.success("启用成功，即将刷新");
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("启用失败，请重试");
-	  //   return false;
-	  // }
+		if (!selectedRows) return true;
+	  const hide = message.loading("正在启用");
+	  try {
+	    await request(BATCH_VALID_USER, {
+		    method: "POST",
+		    data: { ids: selectedRows.map(row => row.id)}
+		  });
+	    hide();
+	    message.success("启用成功，即将刷新");
+			actionRef && actionRef.current && actionRef.current.reload()
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("启用失败，请重试");
+	    return false;
+	  }
 	};
 	/**
 	 *  批量禁用
 	 * @param selectedRows
 	 */
 	const handleBatchUnvalid = async selectedRows => {
-	  // const hide = message.loading("正在禁用");
-	  // if (!selectedRows) return true;
-		//
-	  // try {
-	  //   await request(BATCH_UNVALID_ROLE, {
-		//     method: "POST",
-		//     data: { ids: selectedRows.map(row => row.id)}
-		//   });
-	  //   hide();
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   message.success("禁用成功，即将刷新");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("禁用失败，请重试");
-	  //   return false;
-	  // }
+	  const hide = message.loading("正在禁用");
+	  if (!selectedRows) return true;
+
+	  try {
+	    await request(BATCH_UNVALID_USER, {
+		    method: "POST",
+		    data: { ids: selectedRows.map(row => row.id)}
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("禁用成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("禁用失败，请重试");
+	    return false;
+	  }
 	};
 
 	const handleValid = async val => {
-		// const hide = message.loading(`正在上传数据`);
-		// val.valid = !val.valid;
-		// try {
-	  //   await request(MODIFY_ROLE, {
-		//     method: "POST",
-		//     data: val
-		//   });
-	  //   hide();
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   message.success("操作成功，即将刷新");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("操作失败，请重试");
-	  //   return false;
-	  // }
+		const hide = message.loading(`正在上传数据`);
+		val.valid = !val.valid;
+		try {
+	    await request(MODIFY_USER, {
+		    method: "POST",
+		    data: val
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("操作成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("操作失败，请重试");
+	    return false;
+	  }
 	};
 	const onAdd = () => {
 		console.log("onAdd")
@@ -194,62 +200,62 @@ const TableList = () => {
 		handleModalVisible(true)
 	}
 	const onBatchValid = async (rows) => {
-		// if (!rows) return true;
-		// try {
-		// 	handleBatchValid(rows)
-		// } catch (error) {
-		// 	console.log(error);
-		// }
+		if (!rows) return true;
+		try {
+			handleBatchValid(rows)
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	const onBatchUnvalid = (rows) => {
-		// console.log("onBatchUnvalid")
-		// console.log(rows)
-		// if (!rows) return true;
-		// try {
-		// 	handleBatchUnvalid(rows)
-		// } catch (error) {
-		// 	console.log(error);
-		// }
+		console.log("onBatchUnvalid")
+		console.log(rows)
+		if (!rows) return true;
+		try {
+			handleBatchUnvalid(rows)
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	const onBatchDelete = async (rows) => {
-		// console.log("onBatchDelete")
-		// console.log(rows)
-		// const hide = message.loading(`正在删除`);
-		// try {
-	  //   await request(BATCH_DELETE_ROLE, {
-		//     method: "POST",
-		//     data: { ids: rows.map(row => row.id)}
-		//   });
-	  //   hide();
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   message.success("删除成功，即将刷新");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("删除失败，请重试");
-	  //   return false;
-	  // }
+		console.log("onBatchDelete")
+		console.log(rows)
+		const hide = message.loading(`正在删除`);
+		try {
+	    await request(BATCH_DELETE_USER, {
+		    method: "POST",
+		    data: { ids: rows.map(row => row.id)}
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("删除成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("删除失败，请重试");
+	    return false;
+	  }
 	}
 	const onDelete = async (data) => {
-		// console.log("onDelete")
-		// console.log(data)
-		// const hide = message.loading(`正在删除`);
-		// try {
-	  //   await request(DELETE_ROLE, {
-		//     method: "POST",
-		//     data: data
-		//   });
-	  //   hide();
-		// 	actionRef && actionRef.current && actionRef.current.reload()
-	  //   message.success("删除成功，即将刷新");
-	  //   return true;
-	  // } catch (error) {
-	  //   console.log(error);
-	  //   hide();
-	  //   message.error("删除失败，请重试");
-	  //   return false;
-	  // }
+		console.log("onDelete")
+		console.log(data)
+		const hide = message.loading(`正在删除`);
+		try {
+	    await request(DELETE_USER, {
+		    method: "POST",
+		    data: data
+		  });
+	    hide();
+			actionRef && actionRef.current && actionRef.current.reload()
+	    message.success("删除成功，即将刷新");
+	    return true;
+	  } catch (error) {
+	    console.log(error);
+	    hide();
+	    message.error("删除失败，请重试");
+	    return false;
+	  }
 	}
 	const onValidChange = (data) => {
 		console.log("onValidChange")
