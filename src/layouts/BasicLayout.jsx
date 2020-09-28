@@ -5,7 +5,7 @@
  */
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
 import { formatMessage } from 'umi-plugin-react/locale';
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { Link } from 'umi';
 import { connect } from 'dva';
 import { GithubOutlined } from '@ant-design/icons';
@@ -14,6 +14,10 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
+import request from "@/utils/requestUtil";
+import {
+	ADMIN_PANEL_MENU
+} from "@/utils/constant";
 const noMatch = (
   <Result
     status="403"
@@ -89,6 +93,7 @@ const footerRender = () => {
 };
 
 const BasicLayout = props => {
+	const [menuData, setMenuData] = useState([]);
   const {
     dispatch,
     children,
@@ -108,6 +113,12 @@ const BasicLayout = props => {
       });
     }
   }, []);
+	useEffect(() => {
+		request(ADMIN_PANEL_MENU , {}).then(response => {
+			console.log(response)
+			setMenuData(response.menus)
+		})
+	}, []);
   /**
    * init variables
    */
@@ -158,7 +169,7 @@ const BasicLayout = props => {
         );
       }}
       footerRender={footerRender}
-      menuDataRender={menuDataRender}
+      menuDataRender={() => menuData}
       rightContentRender={() => <RightContent />}
       {...props}
       {...settings}

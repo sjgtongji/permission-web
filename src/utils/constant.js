@@ -15,6 +15,7 @@ export const GET_MENUS_FOR_SELECT = REQUEST_URL + "/menu/queryForSelect";
 export const CREATE_MENUS = REQUEST_URL + "/menu/create";
 export const MODIFY_MENUS = REQUEST_URL + "/menu/modify";
 export const DELETE_MENUS = REQUEST_URL + "/menu/delete";
+export const ADMIN_PANEL_MENU = REQUEST_URL + '/menu/adminPanel';
 
 export const GET_ROLES = REQUEST_URL + "/role/query";
 export const CREATE_ROLE = REQUEST_URL + "/role/create";
