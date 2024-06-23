@@ -1,11 +1,9 @@
 import {
-	GET_MENUS,
-	CREATE_MENUS,
-	MODIFY_MENUS,
-	DELETE_MENUS
+	GET_DKMENUS,
+	CREATE_DKMENUS,
+	MODIFY_DKMENUS
 } from "@/utils/constant";
 import ProTable from '../../components/ProTable/index.jsx'
-import ProjectSelector from '../../components/SelectProject/index.jsx'
 import EditForm from './components/EditForm.jsx'
 import { Button, Divider, Dropdown, Menu, message, Modal} from "antd";
 import React, { useState, useRef } from "react";
@@ -18,7 +16,6 @@ const MenuList = (props) => {
 	const [modalVisible, handleModalVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
 	const [done, setDone] = useState(false);
-  const [parent, setParent] = useState(undefined);
   const actionRef = useRef();
 	const dataColumns = [
 		{
@@ -46,37 +43,36 @@ const MenuList = (props) => {
 		},
 		{
 			title: "菜单路径",
-			dataIndex: "url",
+			dataIndex: "path",
 			rules: [
 				{
 					required: true,
 					message: "菜单名称为必填项"
 				}
-			]
+      ],
+      hideInSearch: true
 		},
-		{
-			title: "组件路径",
-			dataIndex: "component",
-			rules: [
-				{
-					required: true,
-					message: "组件路径为必填项"
-				}
-			],
-			hideInSearch: true,
-			hideInTable: true
-		},
-		{
-			title: "项目名称",
-			dataIndex: "projectName",
-			hideInForm: true,
-			rules: [
-				{
-					required: true,
-					message: "请选择项目"
-				}
-			]
-		},
+    {
+      title: "门店名称",
+      dataIndex: "dkStoreName",
+      rules: [
+        {
+          required: true,
+          message: "门店为必填项"
+        }
+      ],
+      hideInForm: true
+    },
+    {
+      title: "权限等级",
+      dataIndex: "permission",
+      rules: [
+        {
+          required: true,
+          message: "权限等级为必填项"
+        }
+      ]
+    },
 		{
 			title: "创建时间",
 			dataIndex: "createTime",
@@ -97,29 +93,10 @@ const MenuList = (props) => {
 						<a
 							onClick={() => {
 								setCurrent(record);
-								setParent(undefined)
 								handleModalVisible(true);
 							}}
 						>
 							修改
-						</a>
-						<Divider type="vertical" />
-						<a
-							onClick={() => {
-								setCurrent(undefined);
-								setParent(record)
-								handleModalVisible(true);
-							}}
-						>
-							新建子菜单
-						</a>
-						<Divider type="vertical" />
-						<a
-							onClick={() => {
-								onDelete(record)
-							}}
-						>
-							删除
 						</a>
 					</>
 				);
@@ -131,9 +108,9 @@ const MenuList = (props) => {
     console.log(props)
 	  try {
 	    console.log(fields);
-	    await request(CREATE_MENUS, {
+	    await request(CREATE_DKMENUS, {
 		    method: "POST",
-		    data: { ...fields, method: "post" }
+		    data: { ...fields, method: "post" , token : props.token}
 		  });
 	    hide();
 	    message.success("新建成功");
@@ -149,9 +126,9 @@ const MenuList = (props) => {
 		const hide = message.loading("正在修改");
 	  try {
 	    console.log(fields);
-	    await request(MODIFY_MENUS, {
+	    await request(MODIFY_DKMENUS, {
 		    method: "POST",
-		    data: { ...fields, method: "post" }
+        data: { ...fields, method: "post", token: props.token}
 		  });
 	    hide();
 	    message.success("修改成功");
@@ -230,71 +207,13 @@ const MenuList = (props) => {
     console.log("onAdd")
     console.log(props)
 		setCurrent(undefined)
-		setParent(undefined)
 		handleModalVisible(true)
 	}
 
 	const onModify = (data) => {
 		console.log("onModify")
-		setParent({id : data.parentId})
 		setCurrent(data);
 		handleModalVisible(true)
-	}
-	const onBatchValid = async (rows) => {
-		if (!rows) return true;
-		console.log(rows)
-		try {
-			handleBatchValid(rows)
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	const onBatchUnvalid = (rows) => {
-		console.log("onBatchUnvalid")
-		console.log(rows)
-		if (!rows) return true;
-		try {
-			handleBatchUnvalid(rows)
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	const onBatchDelete = (rows) => {
-		console.log("onBatchDelete")
-		console.log(rows)
-	}
-	const onDelete = (data) => {
-		console.log("onDelete")
-		console.log(data)
-		confirm({
-			title: "确认要删除此项目?",
-			icon: <ExclamationCircleOutlined />,
-			content: "",
-			onOk() {
-				const hide = message.loading("正在删除");
-				request(DELETE_MENUS, {
-					method: "POST",
-					data: data
-				}).then(response => {
-					console.log(response);
-					hide();
-					message.success("删除成功");
-					if (actionRef.current) {
-						actionRef.current.reload();
-					}
-				})
-			},
-			onCancel() {}
-		});
-	}
-	const onValidChange = (data) => {
-		console.log("onValidChange")
-		console.log(data)
-		try {
-			handleValid(data)
-		} catch (error) {
-			console.log(error);
-		}
 	}
 	const handleDone = () => {
 		setDone(false);
@@ -327,19 +246,13 @@ const MenuList = (props) => {
 			optionColumn={optionColumn}
 			actionRef={actionRef}
 			headerTitle={'菜单列表'}
-			queryUrl={GET_MENUS}
+			queryUrl={GET_DKMENUS}
 			onAdd={onAdd}
-			onModify={onModify}
-			onBatchValid={onBatchValid}
-			onBatchUnvalid={onBatchUnvalid}
-			onDelete={onDelete}
-			onBatchDelete={onBatchDelete}
-			onValidChange={onValidChange}>
+			onModify={onModify}>
 			<EditForm
 				done={done}
 				columns={dataColumns}
 				current={current}
-				parent={parent}
 				visible={modalVisible}
 				onDone={handleDone}
 				onCancel={handleCancel}

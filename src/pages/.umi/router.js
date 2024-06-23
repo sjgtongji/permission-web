@@ -8,7 +8,7 @@ import {
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/lib/renderRoutes';
 import history from '@@/history';
-import RendererWrapper0 from '/Users/jigangsun/permission-web-git/src/pages/.umi/LocaleWrapper.jsx';
+import RendererWrapper0 from '/Users/jigangsun/permission-web/src/pages/.umi/LocaleWrapper.jsx';
 import { routerRedux, dynamic as _dvaDynamic } from 'dva';
 
 const Router = routerRedux.ConnectedRouter;
@@ -20,7 +20,7 @@ const routes = [
       ? _dvaDynamic({
           component: () =>
             import(/* webpackChunkName: "layouts__UserLayout" */ '../../layouts/UserLayout'),
-          LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+          LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
             .default,
         })
       : require('../../layouts/UserLayout').default,
@@ -32,7 +32,7 @@ const routes = [
           ? _dvaDynamic({
               component: () =>
                 import(/* webpackChunkName: "p__user__login" */ '../user/login'),
-              LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+              LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                 .default,
             })
           : require('../user/login').default,
@@ -41,7 +41,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require('/Users/jigangsun/permission-web-git/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+            require('/Users/jigangsun/permission-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: true },
           ),
@@ -54,7 +54,7 @@ const routes = [
       ? _dvaDynamic({
           component: () =>
             import(/* webpackChunkName: "layouts__SecurityLayout" */ '../../layouts/SecurityLayout'),
-          LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+          LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
             .default,
         })
       : require('../../layouts/SecurityLayout').default,
@@ -65,7 +65,7 @@ const routes = [
           ? _dvaDynamic({
               component: () =>
                 import(/* webpackChunkName: "layouts__BasicLayout" */ '../../layouts/BasicLayout'),
-              LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+              LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                 .default,
             })
           : require('../../layouts/BasicLayout').default,
@@ -83,7 +83,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__Welcome" */ '../Welcome'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../Welcome').default,
@@ -97,7 +97,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__Admin" */ '../Admin'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../Admin').default,
@@ -110,7 +110,7 @@ const routes = [
                   ? _dvaDynamic({
                       component: () =>
                         import(/* webpackChunkName: "p__Admin" */ '../Welcome'),
-                      LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                      LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                         .default,
                     })
                   : require('../Welcome').default,
@@ -119,7 +119,7 @@ const routes = [
               {
                 component: () =>
                   React.createElement(
-                    require('/Users/jigangsun/permission-web-git/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                    require('/Users/jigangsun/permission-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                       .default,
                     { pagesPath: 'src/pages', hasRoutesInConfig: true },
                   ),
@@ -134,7 +134,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__ListTableList" */ '../ListTableList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../ListTableList').default,
@@ -148,7 +148,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__projectList" */ '../projectList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../projectList').default,
@@ -162,7 +162,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__menuList" */ '../menuList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../menuList').default,
@@ -176,7 +176,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__roleList" */ '../roleList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../roleList').default,
@@ -190,10 +190,66 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__usersList" */ '../usersList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../usersList').default,
+            exact: true,
+          },
+          {
+            name: '门店管理',
+            icon: 'smile',
+            path: '/stores',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__storeList" */ '../storeList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../storeList').default,
+            exact: true,
+          },
+          {
+            name: '角色管理',
+            icon: 'smile',
+            path: '/dkroles',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkRoleList" */ '../dkRoleList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkRoleList').default,
+            exact: true,
+          },
+          {
+            name: '用户管理',
+            icon: 'smile',
+            path: '/dkusers',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkUserList" */ '../dkUserList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkUserList').default,
+            exact: true,
+          },
+          {
+            name: '菜单管理',
+            icon: 'smile',
+            path: '/dkmenus',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkMenuList" */ '../dkMenuList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkMenuList').default,
             exact: true,
           },
           {
@@ -204,7 +260,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__EmptyPage" */ '../EmptyPage'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../EmptyPage').default,
@@ -218,7 +274,7 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import(/* webpackChunkName: 'p__ListBasicList__model.js' */ '/Users/jigangsun/permission-web-git/src/pages/ListBasicList/model.js').then(
+                    import(/* webpackChunkName: 'p__ListBasicList__model.js' */ '/Users/jigangsun/permission-web/src/pages/ListBasicList/model.js').then(
                       m => {
                         return { namespace: 'model', ...m.default };
                       },
@@ -226,7 +282,7 @@ const routes = [
                   ],
                   component: () =>
                     import(/* webpackChunkName: "p__ListBasicList" */ '../ListBasicList'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../ListBasicList').default,
@@ -237,7 +293,7 @@ const routes = [
               ? _dvaDynamic({
                   component: () =>
                     import(/* webpackChunkName: "p__404" */ '../404'),
-                  LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../404').default,
@@ -246,7 +302,7 @@ const routes = [
           {
             component: () =>
               React.createElement(
-                require('/Users/jigangsun/permission-web-git/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                require('/Users/jigangsun/permission-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
                 { pagesPath: 'src/pages', hasRoutesInConfig: true },
               ),
@@ -258,7 +314,7 @@ const routes = [
           ? _dvaDynamic({
               component: () =>
                 import(/* webpackChunkName: "p__404" */ '../404'),
-              LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+              LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
                 .default,
             })
           : require('../404').default,
@@ -267,7 +323,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require('/Users/jigangsun/permission-web-git/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+            require('/Users/jigangsun/permission-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: true },
           ),
@@ -278,7 +334,7 @@ const routes = [
     component: __IS_BROWSER
       ? _dvaDynamic({
           component: () => import(/* webpackChunkName: "p__404" */ '../404'),
-          LoadingComponent: require('/Users/jigangsun/permission-web-git/src/components/PageLoading/index')
+          LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
             .default,
         })
       : require('../404').default,
@@ -287,7 +343,7 @@ const routes = [
   {
     component: () =>
       React.createElement(
-        require('/Users/jigangsun/permission-web-git/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+        require('/Users/jigangsun/permission-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: true },
       ),

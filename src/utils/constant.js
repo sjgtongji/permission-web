@@ -1,5 +1,5 @@
 export const REQUEST_URL = "http://localhost:52000/rest";
-export const LOGIN = REQUEST_URL + "/user/login";
+export const LOGIN = REQUEST_URL + "/dkuser/login";
 export const GET_PROJECTS = REQUEST_URL + "/project/query";
 export const GET_PROJECTS_FOR_SELECT = REQUEST_URL + "/project/queryForSelect";
 export const CREATE_PROJECT = REQUEST_URL + "/project/create";
@@ -33,3 +33,22 @@ export const DELETE_USER = REQUEST_URL + "/user/delete";
 export const BATCH_VALID_USER = REQUEST_URL + "/user/batchValid";
 export const BATCH_UNVALID_USER = REQUEST_URL + "/user/batchUnvalid";
 export const BATCH_DELETE_USER = REQUEST_URL + "/user/batchDelete";
+
+export const GET_STORES = REQUEST_URL + '/dkstore/query';
+export const CREATE_STORE = REQUEST_URL + "/dkstore/create";
+export const MODIFY_STORE = REQUEST_URL + "/dkstore/modify";
+export const GET_STORES_FOR_SELECT = REQUEST_URL + "/dkstore/queryForSelect";
+
+export const GET_DKROLES = REQUEST_URL + '/dkrole/query';
+export const CREATE_DKROLE = REQUEST_URL + "/dkrole/create";
+export const MODIFY_DKROLE = REQUEST_URL + "/dkrole/modify";
+export const GET_DKROLES_FOR_SELECT = REQUEST_URL + "/dkrole/queryForSelect";
+
+export const GET_DKUSERS = REQUEST_URL + '/dkuser/query';
+export const CREATE_DKUSER = REQUEST_URL + "/dkuser/create";
+export const MODIFY_DKUSER = REQUEST_URL + "/dkuser/modify";
+
+export const GET_DKMENUS = REQUEST_URL + "/dkmenu/query";
+export const CREATE_DKMENUS = REQUEST_URL + "/dkmenu/create";
+export const MODIFY_DKMENUS = REQUEST_URL + "/dkmenu/modify";
+export const ADMIN_PANEL_DKMENU = REQUEST_URL + '/dkmenu/adminPanel';

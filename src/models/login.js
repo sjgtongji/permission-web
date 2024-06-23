@@ -1,5 +1,5 @@
 import { stringify } from 'querystring';
-import { router } from 'umi';
+import { router, useModel} from 'umi';
 import { fakeAccountLogin , login} from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -7,9 +7,11 @@ const Model = {
   namespace: 'login',
   state: {
     status: undefined,
+    userId : '',
+    token : ''
   },
   effects: {
-    *login({ payload }, { call, put }) {
+    *login({ payload }, { call, put, select}) {
       const response = yield call(login, payload);
       yield put({
         type: 'changeLoginStatus',
@@ -35,7 +37,6 @@ const Model = {
         //     return;
         //   }
         // }
-
         router.replace('/');
       }else{
 
@@ -58,7 +59,8 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
-      return { ...state, status: payload.status, type: payload.type };
+      console.log(payload)
+      return { ...state, status: 1, userId: payload.data.userId, token:payload.data.token };
     },
   },
 };

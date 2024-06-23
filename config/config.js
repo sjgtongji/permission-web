@@ -84,7 +84,8 @@ export default {
           name: 'login',
           path: '/user/login',
           component: './user/login',
-        },
+        }
+
       ],
     },
     {
@@ -148,7 +149,31 @@ export default {
 							icon: 'smile',
 							path: '/users',
 							component: './usersList',
-						},
+            },
+            {
+              name: '门店管理',
+              icon: 'smile',
+              path: '/stores',
+              component: './storeList',
+            },
+            {
+              name: '角色管理',
+              icon: 'smile',
+              path: '/dkroles',
+              component: './dkRoleList',
+            },
+            {
+              name: '用户管理',
+              icon: 'smile',
+              path: '/dkusers',
+              component: './dkUserList',
+            },
+            {
+              name: '菜单管理',
+              icon: 'smile',
+              path: '/dkmenus',
+              component: './dkMenuList',
+            },
             {
               name: '空白页面',
               icon: 'smile',

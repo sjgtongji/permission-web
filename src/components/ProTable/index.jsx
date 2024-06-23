@@ -202,21 +202,13 @@ const TableList = props => {
 						>
 							修改
 						</a>
-						<Divider type="vertical" />
-						<a
-							onClick={() => {
-								onDelete(record)
-							}}
-						>
-							删除
-						</a>
 					</>
 				);
 			}
 		}
 	]
 
-	const allColumns = dataColumns.concat(validColmuns).concat(optionColumn? optionColumn : defaultOptionColumn)
+	const allColumns = dataColumns.concat(optionColumn? optionColumn : defaultOptionColumn)
   return (
     <PageHeaderWrapper>
       <ProTable

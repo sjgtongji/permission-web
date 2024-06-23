@@ -16,7 +16,7 @@ import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 import request from "@/utils/requestUtil";
 import {
-	ADMIN_PANEL_MENU
+	ADMIN_PANEL_DKMENU
 } from "@/utils/constant";
 const noMatch = (
   <Result
@@ -114,7 +114,7 @@ const BasicLayout = props => {
     }
   }, []);
 	useEffect(() => {
-		request(ADMIN_PANEL_MENU , {}).then(response => {
+    request(ADMIN_PANEL_DKMENU, { method: "POST", data: { token: props.token }}).then(response => {
 			console.log(response)
 			setMenuData(response.menus)
 		})
@@ -181,7 +181,8 @@ const BasicLayout = props => {
   );
 };
 
-export default connect(({ global, settings }) => ({
+export default connect(({ login, global, settings }) => ({
   collapsed: global.collapsed,
   settings,
+  token : login.token
 }))(BasicLayout);
