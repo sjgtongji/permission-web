@@ -52,3 +52,8 @@ export const GET_DKMENUS = REQUEST_URL + "/dkmenu/query";
 export const CREATE_DKMENUS = REQUEST_URL + "/dkmenu/create";
 export const MODIFY_DKMENUS = REQUEST_URL + "/dkmenu/modify";
 export const ADMIN_PANEL_DKMENU = REQUEST_URL + '/dkmenu/adminPanel';
+
+export const GET_DKCATAGORYS = REQUEST_URL + '/dkcatagory/query';
+export const CREATE_DKCATAGORY = REQUEST_URL + "/dkcatagory/create";
+export const MODIFY_DKCATAGORY= REQUEST_URL + "/dkcatagory/modify";
+export const GET_DKCATAGORYS_FOR_SELECT = REQUEST_URL + "/dkcatagory/queryForSelect";

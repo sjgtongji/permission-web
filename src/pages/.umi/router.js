@@ -253,6 +253,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '商品类别管理',
+            icon: 'smile',
+            path: '/catagory',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkCatagoryList" */ '../dkCatagoryList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkCatagoryList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

@@ -175,6 +175,12 @@ export default {
               component: './dkMenuList',
             },
             {
+              name: '商品类别管理',
+              icon: 'smile',
+              path: '/catagory',
+              component: './dkCatagoryList',
+            },
+            {
               name: '空白页面',
               icon: 'smile',
               path: '/emptypage',
