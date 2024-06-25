@@ -179,7 +179,8 @@ const TableList = () => {
 	  }
 	};
 	const onAdd = () => {
-		console.log("onAdd")
+    console.log("onAdd")
+    
 		setCurrent(undefined)
 		handleModalVisible(true)
 	}

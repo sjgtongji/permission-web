@@ -1,14 +1,15 @@
 import { DownOutlined, PlusOutlined ,CloseOutlined, CheckOutlined, PropertySafetyFilled } from "@ant-design/icons";
 import { Button, Divider, Dropdown, Menu, message, Modal} from "antd";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { PageHeaderWrapper } from "@ant-design/pro-layout";
 import ProTable from '../../components/ProTable/index.jsx'
 import EditForm from "./components/EditForm.jsx";
 import request from "@/utils/requestUtil";
 import {
-  GET_DKCATAGORYS,
-  CREATE_DKCATAGORY,
-  MODIFY_DKCATAGORY
+  GET_GOODS,
+  CREATE_GOODS,
+  MODIFY_GOODS,
+  GET_DKCATAGORYS_FOR_SELECT
 } from "@/utils/constant";
 const { confirm } = Modal;
 import { connect } from 'dva';
@@ -21,7 +22,7 @@ const TableList = (props) => {
 	const [modalVisible, handleModalVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
 	const [done, setDone] = useState(false);
-	const actionRef = useRef();
+  const actionRef = useRef();
   const dataColumns = [
 		{
       title: "id",
@@ -37,12 +38,34 @@ const TableList = (props) => {
 			hideInTable: true
     },
     {
-      title: "商品类别名称",
+      title: "商品名称",
       dataIndex: "name",
       rules: [
         {
           required: true,
           message: "商品类别名称为必填项"
+        }
+      ],
+      hideInSearch: true,
+    },
+    {
+      title: "价格",
+      dataIndex: "price",
+      rules: [
+        {
+          required: true,
+          message: "价格为必填项"
+        }
+      ],
+      hideInSearch: true,
+    },
+    {
+      title: "库存",
+      dataIndex: "exist",
+      rules: [
+        {
+          required: true,
+          message: "库存为必填项"
         }
       ]
     },
@@ -59,7 +82,7 @@ const TableList = (props) => {
 	  const hide = message.loading("正在新建");
 	  try {
 	    console.log(fields);
-      await request(CREATE_DKCATAGORY, {
+      await request(CREATE_GOODS, {
 		    method: "POST",
 		    data: { ...fields, method: "post" , token : props.token}
 		  });
@@ -77,7 +100,7 @@ const TableList = (props) => {
 		const hide = message.loading("正在修改");
 	  try {
 	    console.log(fields);
-      await request(MODIFY_DKCATAGORY, {
+      await request(MODIFY_GOODS, {
 		    method: "POST",
         data: { ...fields, method: "post", token: props.token}
 		  });
@@ -94,11 +117,12 @@ const TableList = (props) => {
 	const onAdd = () => {
 		console.log("onAdd")
 		setCurrent(undefined)
-		handleModalVisible(true)
+    handleModalVisible(true)
 	}
 
 	const onModify = (data) => {
-		console.log("onModify")
+    console.log("onModify")
+    console.log(data)
 		setCurrent(data);
 		handleModalVisible(true)
 	}
@@ -132,8 +156,8 @@ const TableList = (props) => {
     <ProTable
 			dataColumns={dataColumns}
 			actionRef={actionRef}
-			headerTitle={'商品类别列表'}
-      queryUrl={GET_DKCATAGORYS}
+			headerTitle={'商品列表'}
+      queryUrl={GET_GOODS}
 			onAdd={onAdd}
 			onModify={onModify}
       token={props.token}>
@@ -144,8 +168,7 @@ const TableList = (props) => {
 				visible={modalVisible}
 				onDone={handleDone}
 				onCancel={handleCancel}
-				onSubmit={handleSubmit}
-				/>
+				onSubmit={handleSubmit}/>
 		</ProTable>
   );
 };

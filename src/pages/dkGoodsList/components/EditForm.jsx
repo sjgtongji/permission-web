@@ -2,7 +2,7 @@ import React, { useEffect ,useState} from 'react';
 import moment from 'moment';
 import { Modal, Result, Button, Form, DatePicker, Input, Select } from 'antd';
 import styles from './style.less';
-import StoreSelector from '../../../components/SelectStore/index.jsx'
+import CatagorySelector from '../../../components/SelectCatagory/index.jsx'
 const { TextArea } = Input;
 const formLayout = {
   labelCol: {
@@ -16,8 +16,7 @@ const formLayout = {
 const EditForm = props => {
   const [form] = Form.useForm();
   const { done, visible, current, onDone, onCancel, onSubmit , columns} = props;
-	const [menuVisible, setMenuVisible] = useState(false);
-  const [dkStoreId, setDkStoreId] = useState("");
+  const [dkCatagoryId, setDkCatagoryId] = useState("");
   useEffect(() => {
     if (form && !visible) {
       form.resetFields();
@@ -81,16 +80,29 @@ const EditForm = props => {
 				)
 			}
     })
+    items.push(
+      <Form.Item
+        name='dkCatagoryId'
+        label='选择商品类别'
+        rules={[
+          {
+            required: true,
+            message: '选择商品类别'
+          }
+        ]}>
+        <CatagorySelector onCatagorySelected={onCatagorySelected} defaultValue={current ? current.dkCatagoryId : ""} disabled={current ? true : false}></CatagorySelector>
+
+      </Form.Item>
+    )
 
 		return items;
   }
-  const onStoreSelected = value => {
+  const onCatagorySelected = value => {
     console.log(value)
     form.setFieldsValue({
-      dkStoreId: value
+      dkCatagoryId: value
     });
-    setDkStoreId(value)
-    setMenuVisible(true)
+    setDkCatagoryId(value)
   }
   const getModalContent = () => {
     if (done) {

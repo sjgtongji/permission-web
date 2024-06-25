@@ -60,7 +60,8 @@ const TableList = props => {
 		onValidChange,
 		children,
 		actionRef,
-		rowSelection
+    rowSelection,
+    token
 	} = props
 	// const handleAdd = async fields => {
 	//   const hide = message.loading("正在新建");
@@ -212,7 +213,7 @@ const TableList = props => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="项目列表"
+        headerTitle={headerTitle}
         actionRef={actionRef}
         rowKey="id"
         onChange={(_, _filter, _sorter) => {
@@ -223,7 +224,8 @@ const TableList = props => {
           }
         }}
         params={{
-          sorter
+          sorter,
+          token: token
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Button type="primary" onClick={() => onAdd()}>

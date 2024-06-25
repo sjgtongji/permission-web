@@ -57,3 +57,8 @@ export const GET_DKCATAGORYS = REQUEST_URL + '/dkcatagory/query';
 export const CREATE_DKCATAGORY = REQUEST_URL + "/dkcatagory/create";
 export const MODIFY_DKCATAGORY= REQUEST_URL + "/dkcatagory/modify";
 export const GET_DKCATAGORYS_FOR_SELECT = REQUEST_URL + "/dkcatagory/queryForSelect";
+
+export const GET_GOODS = REQUEST_URL + '/dkgoods/query';
+export const CREATE_GOODS = REQUEST_URL + "/dkgoods/create";
+export const MODIFY_GOODS = REQUEST_URL + "/dkgoods/modify";
+export const GET_DKGOODS_FOR_SELECT = REQUEST_URL + "/dkgoods/queryForSelect";
