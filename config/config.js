@@ -187,6 +187,12 @@ export default {
               component: './dkGoodsList',
             },
             {
+              name: '会员管理',
+              icon: 'smile',
+              path: '/member',
+              component: './dkMemberList',
+            },
+            {
               name: '空白页面',
               icon: 'smile',
               path: '/emptypage',

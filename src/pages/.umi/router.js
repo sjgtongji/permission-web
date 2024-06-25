@@ -281,6 +281,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '会员管理',
+            icon: 'smile',
+            path: '/member',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkMemberList" */ '../dkMemberList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkMemberList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

@@ -62,3 +62,8 @@ export const GET_GOODS = REQUEST_URL + '/dkgoods/query';
 export const CREATE_GOODS = REQUEST_URL + "/dkgoods/create";
 export const MODIFY_GOODS = REQUEST_URL + "/dkgoods/modify";
 export const GET_DKGOODS_FOR_SELECT = REQUEST_URL + "/dkgoods/queryForSelect";
+
+export const GET_DKMEMBERS = REQUEST_URL + '/dkmember/query';
+export const CREATE_DKMEMBER = REQUEST_URL + "/dkmember/create";
+export const MODIFY_DKMEMBER = REQUEST_URL + "/dkmember/modify";
+export const GET_DKMEMBERS_FOR_SELECT = REQUEST_URL + "/dkmember/queryForSelect";
