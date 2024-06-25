@@ -295,6 +295,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '球台管理',
+            icon: 'smile',
+            path: '/table',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkTableList" */ '../dkTableList'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkTableList').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

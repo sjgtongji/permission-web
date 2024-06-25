@@ -193,6 +193,12 @@ export default {
               component: './dkMemberList',
             },
             {
+              name: '球台管理',
+              icon: 'smile',
+              path: '/table',
+              component: './dkTableList',
+            },
+            {
               name: '空白页面',
               icon: 'smile',
               path: '/emptypage',
