@@ -1,6 +1,6 @@
 import React, { useEffect ,useState} from 'react';
 import moment from 'moment';
-import { Modal, Result, Button, Form, DatePicker, Input, Select } from 'antd';
+import { Modal, Result, Button, Form, DatePicker, Input, Select, Checkbox } from 'antd';
 import styles from './style.less';
 import CatagorySelector from '../../../components/SelectCatagory/index.jsx'
 const { TextArea } = Input;
@@ -23,7 +23,7 @@ const EditForm = props => {
     }
   }, [props.visible]);
   useEffect(() => {
-		let fieldsValue = current != null ? {...current} : {...current};
+    let fieldsValue = current != null ? { ...current } : { ...current , payByCash: true};
 		console.log(fieldsValue)
 		form.setFieldsValue(fieldsValue);
   }, [props.current]);
@@ -82,6 +82,14 @@ const EditForm = props => {
     })
     items.push(
       <Form.Item
+        name='payByCash'
+        label='是否现金支付'>
+        <Checkbox onChange={onCheckboxChange} defaultChecked={current ? current.payByCash : true}></Checkbox>
+
+      </Form.Item>
+    )
+    items.push(
+      <Form.Item
         name='dkCatagoryId'
         label='选择商品类别'
         rules={[
@@ -96,6 +104,13 @@ const EditForm = props => {
     )
 
 		return items;
+  }
+
+  const onCheckboxChange = value => {
+    console.log(value)
+    form.setFieldsValue({
+      payByCash: value.target.checked
+    });
   }
   const onCatagorySelected = value => {
     console.log(value)
