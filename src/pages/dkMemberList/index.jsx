@@ -57,13 +57,13 @@ const TableList = (props) => {
       ]
     },
     {
-      title: "剩余储值",
+      title: "卡内余额",
       dataIndex: "value",
       hideInForm: true,
       hideInSearch: true
     },
     {
-      title: "累计储值",
+      title: "累计充值金额",
       dataIndex: "sum",
       hideInForm: true,
       hideInSearch: true
