@@ -199,6 +199,12 @@ export default {
               component: './dkTableList',
             },
             {
+              name: '会员充值管理',
+              icon: 'smile',
+              path: '/recharge',
+              component: './dkRecharge',
+            },
+            {
               name: '空白页面',
               icon: 'smile',
               path: '/emptypage',

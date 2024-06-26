@@ -61,7 +61,8 @@ const TableList = props => {
 		children,
 		actionRef,
     rowSelection,
-    token
+    token,
+    hideOptionColumn
 	} = props
 	// const handleAdd = async fields => {
 	//   const hide = message.loading("正在新建");
@@ -209,7 +210,7 @@ const TableList = props => {
 		}
 	]
 
-	const allColumns = dataColumns.concat(optionColumn? optionColumn : defaultOptionColumn)
+  const allColumns = dataColumns.concat(hideOptionColumn? [] : (optionColumn? optionColumn : defaultOptionColumn))
   return (
     <PageHeaderWrapper>
       <ProTable

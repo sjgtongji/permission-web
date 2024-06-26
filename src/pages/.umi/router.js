@@ -309,6 +309,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '会员充值管理',
+            icon: 'smile',
+            path: '/recharge',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkRecharge" */ '../dkRecharge'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkRecharge').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

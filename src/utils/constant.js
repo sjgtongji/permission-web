@@ -71,3 +71,6 @@ export const GET_DKMEMBERS_FOR_SELECT = REQUEST_URL + "/dkmember/queryForSelect"
 export const GET_DKTABLES = REQUEST_URL + '/dktable/query';
 export const CREATE_DKTABLE = REQUEST_URL + "/dktable/create";
 export const MODIFY_DKTABLE = REQUEST_URL + "/dktable/modify";
+
+export const GET_DKRECHARGES = REQUEST_URL + '/dkrecharge/query';
+export const CREATE_DKRECHARGE= REQUEST_URL + "/dkrecharge/create";
