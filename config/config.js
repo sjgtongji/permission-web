@@ -205,6 +205,12 @@ export default {
               component: './dkRecharge',
             },
             {
+              name: '开台管理',
+              icon: 'smile',
+              path: '/order',
+              component: './dkTableManage',
+            },
+            {
               name: '空白页面',
               icon: 'smile',
               path: '/emptypage',

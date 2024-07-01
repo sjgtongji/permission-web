@@ -323,6 +323,20 @@ const routes = [
             exact: true,
           },
           {
+            name: '开台管理',
+            icon: 'smile',
+            path: '/order',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  component: () =>
+                    import(/* webpackChunkName: "p__dkTableManage" */ '../dkTableManage'),
+                  LoadingComponent: require('/Users/jigangsun/permission-web/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../dkTableManage').default,
+            exact: true,
+          },
+          {
             name: '空白页面',
             icon: 'smile',
             path: '/emptypage',

@@ -17,7 +17,7 @@ const requestUtil = (url, params) => {
           description: response.message,
           message: "请求异常"
         });
-        resolve(response);
+        reject(response);
       }
     });
   });

@@ -74,3 +74,9 @@ export const MODIFY_DKTABLE = REQUEST_URL + "/dktable/modify";
 
 export const GET_DKRECHARGES = REQUEST_URL + '/dkrecharge/query';
 export const CREATE_DKRECHARGE= REQUEST_URL + "/dkrecharge/create";
+
+export const TABLE_ORDER_START = REQUEST_URL + '/dktableorder/start';
+export const TABLE_ORDER_BUY = REQUEST_URL + '/dktableorder/buy';
+export const TABLE_ORDER_READ = REQUEST_URL + '/dktableorder/read';
+export const TABLE_ORDER_PAYINFO = REQUEST_URL + '/dktableorder/payInfo';
+export const TABLE_ORDER_END = REQUEST_URL + '/dktableorder/end';
