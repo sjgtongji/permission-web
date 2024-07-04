@@ -11,7 +11,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'Ant Design Pro',
+  title: '欣悦台球俱乐部',
   pwa: false,
   iconfontUrl: '',
 };
